@@ -1,52 +1,56 @@
 import React, { Component } from 'react';
 import * as GdpApi from './utils/GdpAPI'
-import Chart from  './Chart'
-
+//import Chart from  './Chart
+import {Line} from 'react-chartjs-2';
 
 class App extends Component {
 
   state = {
-    chartData: {}
+    chartData: []
       }
-  // componentDidMount = () => {
-  //   GdpApi.fetchData().then(data => console.log(data))
-  // }
 
-  componentWillMount(){
-    this.getChartData()
+  componentDidMount = () => {
+    let { chartData } = this.state
+    GdpApi.fetchData().then(resdata => {
+    chartData = resdata.data
+    this.setState({chartData})
+  })
   }
 
-getChartData(){
-  this.setState({
-    chartData : {
-      labels: ["NewDelhi", "Bangalore", "Lucknow", "Mumbai", "Rajsthan", "Shimla", "hydraBad"],
-      datasets: [{
-        label: "Populations",
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(153, 102, 255, 0.6)',
-          'rgba(255, 159, 64, 0.6)',
-          'rgba(255, 99, 132, 0.6)'
-        ],
-         borderWidth: 1,
-        data: [65034803,  80238239, 5983792,81298392, 56379382, 5529382, 4028392],
-      }]
-    }
-
-  })
-}
-
   render() {
+    let chartData = this.state ? this.state.chartData : []
+    let dates = []
+    let renderData = chartData.filter((item, index) => {
+    if (index %  20 === 0) {
+      dates[index] = item[0].substr(0, 4);
+      return dates[index];
+    }
+}
+)
+
+ let labels = renderData.map(elm => elm[0].substr(0,4))
+ let data = renderData.map(elm => elm[1])
+
+ let gdpData = {
+   labels: labels,
+   datasets: [{
+     label: "Gdp",
+     backgroundColor: [
+       'rgba(255, 99, 132, 0.6)'
+     ],
+       data: data,
+   }]
+ };
+
+
     return (
       <div className="App">
-        <h1>React Bar Chart</h1>
-        <Chart  chartData = { this.state.chartData}/>
-      
-
-
+      <h1>Modeling US GDP Economic Data with React</h1>
+      <Line
+      data={gdpData}
+      options={{}}
+      width={600}
+      height={250} />
       </div>
     );
   }

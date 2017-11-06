@@ -9,6 +9,7 @@ class Chart extends Component {
 
   render() {
     const { chartData } = this.props;
+    
     return (
       <div>
         <Bar
