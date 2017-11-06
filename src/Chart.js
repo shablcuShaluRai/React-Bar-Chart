@@ -1,59 +1,51 @@
 import React, { Component } from 'react'
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 
 
-class Chart extends Component {
+export default class Chart extends Component {
 
 
 
   render() {
-    const { chartData } = this.props;
-    
+        let { chartData } = this.props;
+
+           chartData = this.props ? this.props.chartData : []
+            let dates = []
+            let renderData = chartData.filter((item, index) => {
+            if (index %  20 === 0) {
+              dates[index] = item[0];
+              return dates;
+            }
+        }
+        )
+
+         let labels = renderData.map(label => label[0].substr(0,4))
+         let data = renderData.map(dta => dta[1])
+
+
+         let gdpData = {
+           labels: labels,
+           datasets: [{
+             label: "Gdp",
+             backgroundColor: 'rgba(255,0,0, 0.6)',
+               data: data,
+           }]
+         };
+
     return (
       <div>
-        <Bar
-        data={chartData}
-        options={{
-          title:{
-            display : true,
-            text: 'Largest Cities In Bangalore',
-            fontSize: 25
+          <Line
+           data={gdpData}
+           options={{
+           title:{
+             display : true,
+             text: 'Gdp Line Chart',
+             fontSize: 25
           },
           legend:{
             display:true,
-            position:'right'
-          }
-        }}
-        width={600}
-        height={250} />
-        <Line
-        data={chartData}
-        options={{
-          title:{
-            display : true,
-            text: 'Largest Cities In Bangalore',
-            fontSize: 25
-          },
-          legend:{
-            display:true,
-            position:'right'
-          }
-        }}
-        width={600}
-        height={250} />
-
-        <Pie
-        data={chartData}
-        options={{
-          title:{
-            display : true,
-            text: 'Largest Cities In Bangalore',
-            fontSize: 25
-          },
-          legend:{
-            display:true,
-            position:'right'
+            position:'top'
           }
         }}
         width={600}
@@ -62,5 +54,3 @@ class Chart extends Component {
     )
   }
 }
-
-export default Chart;
