@@ -10,18 +10,21 @@ export default class App extends Component {
       }
 
   componentDidMount = () => {
-    let { chartData } = this.state
-    GdpApi.fetchData().then(resdata => {
-    chartData = resdata.data
-    this.setState({chartData})
-  })
-  }
+    this.getData()
+    setInterval(() => { this.getData()}, 300000);
+}
 
-  render() {
-    return (
+getData =  () => {
+  GdpApi.fetchData().then(chartData => {
+   return this.setState({chartData})
+})
+}
+
+render() {
+  return (
       <div className="App">
       <h1>Modeling US GDP Economic Data with React</h1>
-      <Chart chartData = { this.state.chartData} />
+      <Chart chartData = {this.state.chartData} />
       </div>
     );
   }

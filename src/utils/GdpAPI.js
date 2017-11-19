@@ -1,7 +1,8 @@
 export async function fetchData() {
-  try {   let url = 'https://gist.githubusercontent.com/shalurai/f356824e9f19f46a86dc91d8d13b7450/raw/e31b2f657fa458a37c10ea55c93b656c0a9a5f80/GDP-data.json';
+  try {
+    let url = 'https://api.coinmarketcap.com/v1/ticker/?limit=10'
     let response = await fetch(url);
-   let body = await response.json();
+    let body = await response.json();
     return body;
   }
   catch(e){

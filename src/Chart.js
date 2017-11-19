@@ -1,31 +1,16 @@
 import React, { Component } from 'react'
-import { Line } from 'react-chartjs-2';
-
-
+import { Bar } from 'react-chartjs-2';
 
 export default class Chart extends Component {
 
-
-
   render() {
         let { chartData } = this.props;
-
-           chartData = this.props ? this.props.chartData : []
-            let dates = []
-            let renderData = chartData.filter((item, index) => {
-            if (index %  20 === 0) {
-              dates[index] = item[0];
-              return dates;
-            }
-        }
-        )
-
-         let labels = renderData.map(label => label[0].substr(0,4))
-         let data = renderData.map(dta => dta[1])
-
+         chartData = this.props ? this.props.chartData : []
+         let data = chartData.map(dt => dt.price_usd)
+         let lebelData = chartData.map(ld => ld.name )
 
          let gdpData = {
-           labels: labels,
+           labels: lebelData,
            datasets: [{
              label: "Gdp",
              backgroundColor: 'rgba(255,0,0, 0.6)',
@@ -35,7 +20,7 @@ export default class Chart extends Component {
 
     return (
       <div>
-          <Line
+          <Bar
            data={gdpData}
            options={{
            title:{
