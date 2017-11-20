@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 
 export default class Chart extends Component {
 
@@ -13,7 +13,18 @@ export default class Chart extends Component {
            labels: lebelData,
            datasets: [{
              label: "Gdp",
-             backgroundColor: 'rgba(255,0,0, 0.6)',
+             backgroundColor: [
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)',
+                 'rgba(255, 99, 132, 0.6)',
+                 'rgba(255, 99, 132, 0.6)',
+                 'rgba(54, 162, 235, 0.6)',
+                 'rgba(153, 102, 255, 0.6)',
+    ],
                data: data,
            }]
          };
@@ -31,6 +42,22 @@ export default class Chart extends Component {
           legend:{
             display:true,
             position:'top'
+          }
+        }}
+        width={600}
+        height={250} />
+
+        <Pie
+        data={gdpData}
+        options={{
+          title:{
+            display : true,
+            text: 'Exchange rate of all crypto currencies in USD',
+            fontSize: 25
+          },
+          legend:{
+            display:true,
+            position:'right'
           }
         }}
         width={600}
